@@ -1,0 +1,36 @@
+@model BorrowRecord
+@{
+    ViewData["Title"] = "Borrow Book";
+}
+
+<div class="premium-card" style="max-width: 600px; margin: 0 auto;">
+    <h3 class="mb-4" style="font-family:var(--font-outfit); font-weight:700;">Borrow Book</h3>
+
+    <div class="alert alert-info" style="border-radius:10px;">
+        <i class="fa-solid fa-book me-2"></i> Book Selected: <strong>@Model.Book?.Title</strong> by @Model.Book?.Author
+    </div>
+
+    <form asp-action="Borrow" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <input type="hidden" asp-for="BookId" />
+
+        <div class="mb-3">
+            <label asp-for="StudentId" class="form-label fw-semibold">Select Student</label>
+            <select asp-for="StudentId" class="form-select" asp-items="ViewBag.StudentId" style="border-radius:8px;">
+                <option value="">-- Choose Student --</option>
+            </select>
+            <span asp-validation-for="StudentId" class="text-danger"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="DueDate" class="form-label fw-semibold">Due Date</label>
+            <input asp-for="DueDate" type="date" class="form-control" style="border-radius:8px;" />
+            <span asp-validation-for="DueDate" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <a asp-action="Index" class="btn btn-outline-secondary" style="border-radius:8px;">Cancel</a>
+            <button type="submit" class="btn-premium">Confirm Borrow</button>
+        </div>
+    </form>
+</div>

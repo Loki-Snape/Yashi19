@@ -1,0 +1,60 @@
+@model StudentModel
+@{
+    ViewData["Title"] = "Enroll Student";
+}
+
+<div class="premium-card" style="max-width: 600px; margin: 0 auto;">
+    <h3 class="mb-4" style="font-family:var(--font-outfit); font-weight:700;">Enroll Student</h3>
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="FirstName" class="form-label fw-semibold"></label>
+                <input asp-for="FirstName" class="form-control" placeholder="First name" style="border-radius:8px;" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="LastName" class="form-label fw-semibold"></label>
+                <input asp-for="LastName" class="form-control" placeholder="Last name" style="border-radius:8px;" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label fw-semibold"></label>
+            <input asp-for="Email" type="email" class="form-control" placeholder="student@example.com" style="border-radius:8px;" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PhoneNumber" class="form-label fw-semibold"></label>
+            <input asp-for="PhoneNumber" class="form-control" placeholder="Phone number" style="border-radius:8px;" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="StudentCardId" class="form-label fw-semibold"></label>
+                <input asp-for="StudentCardId" class="form-control" placeholder="e.g. STU1024" style="border-radius:8px;" />
+                <span asp-validation-for="StudentCardId" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="EnrollmentDate" class="form-label fw-semibold"></label>
+                <input asp-for="EnrollmentDate" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" style="border-radius:8px;" />
+                <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-4 form-check form-switch">
+            <input asp-for="IsActive" class="form-check-input" type="checkbox" style="cursor:pointer;" />
+            <label asp-for="IsActive" class="form-check-label fw-semibold" style="cursor:pointer;"></label>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <a asp-action="Index" class="btn btn-outline-secondary" style="border-radius:8px;">Back to List</a>
+            <button type="submit" class="btn-premium">Enroll Student</button>
+        </div>
+    </form>
+</div>

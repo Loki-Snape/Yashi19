@@ -1,0 +1,52 @@
+@model Publication
+@using LibraryManagementSystem.Models
+@{
+    ViewData["Title"] = "Publication Specifications";
+}
+
+<div class="mib-card" style="max-width: 600px; margin: 0 auto;">
+    <h3 class="tech-header text-white mb-4">SPECIFICATIONS MATRIX</h3>
+    
+    <table class="table table-borderless text-white">
+        <tbody>
+            <tr>
+                <td class="fw-semibold text-muted" style="width: 150px; font-family:var(--font-mono);">ASSET TYPE:</td>
+                <td>
+                    @if (Model.Type == PublicationType.Newspaper)
+                    {
+                        <span class="mib-badge mib-badge-cyan">Newspaper</span>
+                    }
+                    else
+                    {
+                        <span class="mib-badge mib-badge-gold">Magazine</span>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="fw-semibold text-muted" style="font-family:var(--font-mono);">TITLE:</td>
+                <td class="fw-bold">@Model.Title</td>
+            </tr>
+            <tr>
+                <td class="fw-semibold text-muted" style="font-family:var(--font-mono);">PUBLISHER:</td>
+                <td>@Model.Publisher</td>
+            </tr>
+            <tr>
+                <td class="fw-semibold text-muted" style="font-family:var(--font-mono);">ISSUE ID:</td>
+                <td><code class="text-cyan px-2 py-1 bg-black rounded" style="border: 1px solid var(--mib-border);">@Model.IssueNumber</code></td>
+            </tr>
+            <tr>
+                <td class="fw-semibold text-muted" style="font-family:var(--font-mono);">RELEASE DATE:</td>
+                <td style="font-family:var(--font-mono);">@Model.ReleaseDate.ToString("yyyy-MM-dd")</td>
+            </tr>
+            <tr>
+                <td class="fw-semibold text-muted" style="font-family:var(--font-mono);">FREQUENCY:</td>
+                <td>@Model.Frequency</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top border-secondary">
+        <a asp-action="Index" class="btn-outline-mib">Return to Sector</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-cyan">Update Profile</a>
+    </div>
+</div>

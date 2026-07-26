@@ -1,0 +1,112 @@
+@model IEnumerable<LibraryManagementSystem.Models.Publication>
+@using LibraryManagementSystem.Models
+@{
+    string typeName = "Publications";
+    ViewData["Title"] = $"Classified {typeName}";
+    int currentPage = ViewBag.CurrentPage != null ? (int)ViewBag.CurrentPage : 1;
+    int totalPages = ViewBag.TotalPages != null ? (int)ViewBag.TotalPages : 1;
+    string searchString = ViewBag.SearchString as string ?? "";
+}
+
+<div class="row align-items-center mb-4">
+    <div class="col-md-6">
+        <h2 class="tech-header mb-0">CLASSIFIED @typeName.ToUpper()</h2>
+    </div>
+    <div class="col-md-6 text-end">
+        <a asp-action="Create" class="btn-cyan">
+            <i class="fa-solid fa-plus me-1"></i> Register Publication
+        </a>
+    </div>
+</div>
+
+<div class="mib-card mb-4">
+    <!-- Search & Type Filter Form -->
+    <form asp-action="Index" method="get" class="row g-3">
+        <div class="col-md-6">
+            <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control" placeholder="Search Title or Publisher..." />
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn-cyan w-100">Search</button>
+            @if (!string.IsNullOrWhiteSpace(ViewBag.SearchString))
+            {
+                <a asp-action="Index" class="btn-outline-mib d-flex align-items-center justify-content-center" style="padding: 10px 16px;"><i class="fa-solid fa-rotate-left"></i></a>
+            }
+        </div>
+    </form>
+</div>
+
+<!-- Publications Table -->
+<div class="mib-table-container">
+    <table class="mib-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Publisher</th>
+                <th>Issue Identifier</th>
+                <th>Release Date</th>
+                <th>Frequency</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold text-white">@item.Title</td>
+                        <td>
+                            @if (item.Type == PublicationType.Newspaper)
+                            {
+                                <span class="mib-badge mib-badge-cyan"><i class="fa-solid fa-newspaper"></i> Newspaper</span>
+                            }
+                            else
+                            {
+                                <span class="mib-badge mib-badge-gold"><i class="fa-solid fa-book-open"></i> Magazine</span>
+                            }
+                        </td>
+                        <td>@item.Publisher</td>
+                        <td><code class="text-cyan px-2 py-1 bg-black rounded" style="border: 1px solid var(--mib-border);">@item.IssueNumber</code></td>
+                        <td style="font-family:var(--font-mono);">@item.ReleaseDate.ToString("yyyy-MM-dd")</td>
+                        <td>@item.Frequency</td>
+                        <td class="text-end">
+                            <div class="btn-group gap-1">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-mib py-1 px-2" style="font-size:0.8rem;"><i class="fa-solid fa-eye"></i></a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-gold py-1 px-2" style="font-size:0.8rem;"><i class="fa-solid fa-pen"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-crimson py-1 px-2" style="font-size:0.8rem;"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center py-4 text-muted" style="font-family:var(--font-mono);">NO PUBLICATIONS FOUND WITHIN CURRENT FREQUENCY INDEX.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Pagination -->
+@if (totalPages > 1)
+{
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <span>INDEX SECTOR PAGE @currentPage OF @totalPages</span>
+        <div class="btn-group">
+            <a class="btn btn-sm btn-outline-secondary @(currentPage <= 1 ? "disabled" : "")"
+               href="@Url.Action("Index", "Publications", new { pageNumber = currentPage - 1, searchString = searchString })">PREV</a>
+
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <a class="btn btn-sm @(i == currentPage ? "btn-primary" : "btn-outline-secondary")"
+                   href="@Url.Action("Index", "Publications", new { pageNumber = i, searchString = searchString })">@i</a>
+            }
+
+            <a class="btn btn-sm btn-outline-secondary @(currentPage >= totalPages ? "disabled" : "")"
+               href="@Url.Action("Index", "Publications", new { pageNumber = currentPage + 1, searchString = searchString })">NEXT</a>
+        </div>
+    </div>
+}

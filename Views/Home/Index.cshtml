@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Archival Gateway";
+}
+
+<div class="row g-4">
+    <!-- Announcement Banner -->
+    <div class="col-md-12">
+        <div class="mib-card mib-card-crimson p-4" style="border-left: 4px solid var(--mib-crimson);">
+            <div class="d-flex align-items-center gap-3 mb-2 text-danger">
+                <i class="fa-solid fa-triangle-exclamation fa-2x"></i>
+                <h4 class="mb-0 text-danger" style="font-family:var(--font-tech);">SECURE SECTOR ACCESS ONLY</h4>
+            </div>
+            <p class="mb-0 text-muted" style="font-size:0.95rem;">
+                All queries, data fetches, and asset borrowings are monitored in real-time by the Men In Black Main Command Division. Unauthorized usage will result in immediate Neuralizer clearance.
+            </p>
+        </div>
+    </div>
+
+    <!-- Main System Gateway Cards -->
+    <div class="col-md-8">
+        <div class="mib-card h-100 d-flex flex-column justify-content-between">
+            <div>
+                <h2 class="tech-header">SYSTEM ARCHIVE GATEWAY</h2>
+                <p style="font-size:1.1rem; line-height:1.7;">
+                    Welcome to the central storage cluster of the **M.I.B. Archival and Resource System (MARS)**. This node catalogs all known physical manuscripts, periodicals, classified publications, and dossiers related to extraterrestrial affairs, technologies, and agent registration.
+                </p>
+                <div class="alert alert-secondary bg-black border-secondary text-white mt-4" style="border-radius:8px; font-family:var(--font-mono);">
+                    <i class="fa-solid fa-terminal me-2 text-cyan"></i> CURRENT_SESSION_PROTOCOL: TLS_1.3_ENCRYPTED // SEED_DATA_LOADED: TRUE
+                </div>
+            </div>
+            
+            <div class="d-flex gap-3 mt-4">
+                <a asp-controller="Books" asp-action="Index" class="btn-cyan">Query Catalog</a>
+                <a asp-controller="Dashboard" asp-action="Index" class="btn-outline-mib">View Console Analytics</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Broadcast Bulletin -->
+    <div class="col-md-4">
+        <div class="mib-card h-100">
+            <h4 class="tech-header text-white" style="font-size:1.1rem;">AGENCY BULLETIN</h4>
+            
+            <ul class="list-unstyled d-flex flex-direction-column gap-3 mt-4" style="font-family:var(--font-mono); font-size:0.9rem;">
+                <li class="pb-3 border-bottom border-secondary">
+                    <span class="text-danger">[ALERT]</span> Neuralizer inventory check required at Sector 7. Submit reports to the head librarian.
+                </li>
+                <li class="pb-3 border-bottom border-secondary">
+                    <span class="text-warning">[WARNING]</span> Category 4 literature regarding the Orion Nebula must remain classified. Under no circumstances should members borrow these copies.
+                </li>
+                <li>
+                    <span class="text-cyan">[INFO]</span> New Daily publications of "The NY Times" and "The Wall Street Journal" are indexed automatically at 0400 hours.
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

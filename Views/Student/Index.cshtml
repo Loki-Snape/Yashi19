@@ -1,0 +1,55 @@
+@model LibraryManagementSystem.ViewModels.StudentIndexViewModel
+
+@{
+    ViewData["Title"] = "Students List";
+}
+
+<h2>Students Directory</h2>
+
+<div style="margin-bottom: 20px;">
+    <form method="get" asp-action="Index">
+        <input type="text" name="searchQuery" value="@Model.SearchQuery" placeholder="Search students..." style="padding: 6px; width: 250px;" />
+        <button type="submit" style="padding: 6px 12px;">Search</button>
+    </form>
+</div>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add New Student</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Card ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Students != null && Model.Students.Any())
+        {
+            foreach (var item in Model.Students)
+            {
+                <tr>
+                    <td>@item.StudentCardId</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" style="text-align: center;">No students found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

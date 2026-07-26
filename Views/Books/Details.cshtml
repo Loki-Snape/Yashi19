@@ -1,0 +1,119 @@
+@model Book
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<div class="row g-4">
+    <!-- Book Card Detail -->
+    <div class="col-md-5">
+        <div class="premium-card">
+            <h3 class="mb-4" style="font-family:var(--font-outfit); font-weight:700;">@Model.Title</h3>
+            
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <td class="fw-semibold text-muted" style="width: 130px;">Author:</td>
+                        <td>@Model.Author</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold text-muted">ISBN:</td>
+                        <td><code class="px-2 py-1 bg-light rounded text-dark">@Model.ISBN</code></td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold text-muted">Publisher:</td>
+                        <td>@Model.Publisher</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold text-muted">Publish Date:</td>
+                        <td>@Model.PublishDate.ToString("MMMM dd, yyyy")</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold text-muted">Inventory:</td>
+                        <td>
+                            <strong>@Model.AvailableCopies</strong> available / <strong>@Model.TotalCopies</strong> total copies
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="d-flex gap-2 mt-4">
+                <a asp-action="Index" class="btn btn-outline-secondary" style="border-radius:8px;">Back to List</a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-dark" style="border-radius:8px;">Edit Book</a>
+                @if (Model.AvailableCopies > 0)
+                {
+                    <a asp-action="Borrow" asp-route-id="@Model.Id" class="btn-premium">Borrow Book</a>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Borrowing Records History -->
+    <div class="col-md-7">
+        <div class="table-container mt-0">
+            <div class="p-4 border-bottom bg-light">
+                <h5 class="mb-0" style="font-family:var(--font-outfit); font-weight:700;">Borrowing Transactions History</h5>
+            </div>
+            
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Borrow Date</th>
+                        <th>Due Date</th>
+                        <th>Return Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.BorrowRecords.Any())
+                    {
+                        foreach (var record in Model.BorrowRecords)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@(record.Student?.FullName ?? "Unknown")</td>
+                                <td>@record.BorrowDate.ToString("yyyy-MM-dd")</td>
+                                <td>@record.DueDate.ToString("yyyy-MM-dd")</td>
+                                <td>@(record.ReturnDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                                <td>
+                                    @if (record.IsReturned)
+                                    {
+                                        <span class="badge badge-premium badge-success">Returned</span>
+                                    }
+                                    else if (record.DueDate < DateTime.Today)
+                                    {
+                                        <span class="badge badge-premium badge-danger">Overdue</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-premium badge-warning">Active</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!record.IsReturned)
+                                    {
+                                        <form asp-action="Return" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@record.Id" />
+                                            <button type="submit" class="btn btn-sm btn-success" style="border-radius:6px;">Mark Returned</button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted" style="font-size:0.85rem;">Completed</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">No borrowings recorded for this book.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

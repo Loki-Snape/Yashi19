@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M.I.B. ARCHIVAL & RESOURCE SYSTEM</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    </environment>
+</head>
+<body>
+    <header class="navbar">
+        <nav class="nav-container">
+            <div class="brand">M.I.B. ARCHIVAL & RESOURCE SYSTEM</div>
+            <ul class="nav-links">
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-area="" asp-controller="Books" asp-action="Index">Books</a></li>
+                <li><a asp-area="" asp-controller="Publications" asp-action="Index">Publications</a></li>
+                <li><a asp-area="" asp-controller="Students" asp-action="Index">Students</a></li>
+                <li><a asp-area="" asp-controller="Librarians" asp-action="Index">Librarians</a></li>
+                <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+                <li><a asp-area="" asp-controller="AboutUs" asp-action="Index">About Us</a></li>
+                <li><a asp-area="" asp-controller="ContactUs" asp-action="Index">Contact Us</a></li>
+                
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
+                            <button type="submit" class="nav-link btn-link" style="background:none;border:none;color:inherit;cursor:pointer;font:inherit;">Logout</button>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                }
+            </ul>
+        </nav>
+    </header>
+    <main class="content">
+        @RenderBody()
+    </main>
+    <footer class="border-top footer text-muted">
+    <div class="container text-center py-3">
+        &copy; @DateTime.Now.Year - Library Management System. All Rights Reserved. | <strong>Copyright to Mridul</strong>
+    </div>
+</footer>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

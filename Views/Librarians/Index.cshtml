@@ -1,0 +1,47 @@
+@model LibraryManagementSystem.ViewModels.LibrarianIndexViewModel
+
+@{
+    ViewData["Title"] = "Librarians Directory";
+}
+
+<div class="container my-4">
+    <h2 class="mb-3">Librarians Directory</h2>
+
+    <form method="get" asp-action="Index" class="mb-4 d-flex gap-2">
+        <input type="text" name="searchQuery" value="@Model.SearchQuery" class="form-control w-25" placeholder="Search librarians..." />
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+    </form>
+
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Employee ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Hire Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Librarians != null && Model.Librarians.Any())
+            {
+                foreach (var librarian in Model.Librarians)
+                {
+                    <tr>
+                        <td><span class="badge bg-info text-dark">@librarian.EmployeeId</span></td>
+                        <td>@librarian.FirstName</td>
+                        <td>@librarian.LastName</td>
+                        <td>@librarian.Email</td>
+                        <td>@librarian.HireDate.ToShortDateString()</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center py-3">No librarian records found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

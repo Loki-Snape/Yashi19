@@ -1,0 +1,62 @@
+@model IEnumerable<LibraryManagementSystem.Models.StudentModel>
+
+@{
+    ViewData["Title"] = "Students Directory";
+}
+
+<div class="container my-4">
+    <h2 class="mb-3">Students Directory</h2>
+
+    <form method="get" asp-action="Index" class="mb-4 d-flex gap-2">
+        <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control w-25" placeholder="Search students..." />
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+    </form>
+
+    <table class="table table-striped table-hover align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Card ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Enrollment Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var student in Model)
+                {
+                    <tr>
+                        <td><span class="badge bg-secondary">@student.StudentCardId</span></td>
+                        <td>@student.FirstName</td>
+                        <td>@student.LastName</td>
+                        <td>@student.Email</td>
+                        <td>@student.EnrollmentDate.ToShortDateString()</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center py-3">No student records found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <span>INDEX SECTOR PAGE @ViewBag.CurrentPage OF @ViewBag.TotalPages</span>
+        <div>
+            <a class="btn btn-sm btn-outline-secondary @(ViewBag.CurrentPage <= 1 ? "disabled" : "")" 
+               href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage - 1, searchString = ViewBag.SearchString })">PREV</a>
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <a class="btn btn-sm @(i == ViewBag.CurrentPage ? "btn-primary" : "btn-outline-secondary")" 
+                   href="@Url.Action("Index", new { pageNumber = i, searchString = ViewBag.SearchString })">@i</a>
+            }
+            <a class="btn btn-sm btn-outline-secondary @(ViewBag.CurrentPage >= ViewBag.TotalPages ? "disabled" : "")" 
+               href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage + 1, searchString = ViewBag.SearchString })">NEXT</a>
+        </div>
+    </div>
+</div>
