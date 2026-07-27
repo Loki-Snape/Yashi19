@@ -1,14 +1,14 @@
 @model BookListViewModel
 @{
-    ViewData["Title"] = "Archived Books Catalog";
+    ViewData["Title"] = "Books Catalog";
 }
 
 <div class="row align-items-center mb-4">
     <div class="col-md-6">
-        <h2 class="tech-header mb-0">ARCHIVED BOOKS CATALOG</h2>
+        <h2 class="tech-header mb-0">Books Catalog</h2>
     </div>
     <div class="col-md-6 text-end">
-        <a asp-action="Create" class="btn-cyan">
+        <a asp-action="Create" class="btn btn-primary">
             <i class="fa-solid fa-plus me-1"></i> Register New Book Asset
         </a>
     </div>
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="col-md-3 d-flex gap-2">
-            <button type="submit" class="btn-cyan w-100">Filter Matrix</button>
+            <button type="submit" class="btn btn-primary w-100">Filter Matrix</button>
             @if (!string.IsNullOrWhiteSpace(Model.SearchQuery))
             {
                 <a asp-action="Index" class="btn-outline-mib d-flex align-items-center justify-content-center" style="padding: 10px 16px;"><i class="fa-solid fa-rotate-left"></i></a>
@@ -44,7 +44,7 @@
                 <th>Publisher</th>
                 <th>Publish Date</th>
                 <th>Availability</th>
-                <th class="text-end">Confidential Actions</th>
+                <th class="text-end">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -53,7 +53,7 @@
                 foreach (var item in Model.Books)
                 {
                     <tr>
-                        <td class="fw-bold text-white">@item.Title</td>
+                        <td class="fw-bold">@item.Title</td>
                         <td>@item.Author</td>
                         <td><code class="text-cyan px-2 py-1 bg-black rounded" style="border: 1px solid var(--mib-border);">@item.ISBN</code></td>
                         <td>@item.Publisher</td>
@@ -72,11 +72,11 @@
                             <div class="btn-group gap-1">
                                 @if (item.AvailableCopies > 0)
                                 {
-                                    <a asp-action="Borrow" asp-route-id="@item.Id" class="btn btn-sm btn-cyan py-1 px-3" style="font-size: 0.8rem;">Borrow</a>
+                                    <a asp-action="Borrow" asp-route-id="@item.Id" class="btn btn-sm btn-primary py-1 px-3" style="font-size: 0.8rem;">Borrow</a>
                                 }
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-mib py-1 px-2" style="font-size: 0.8rem;"><i class="fa-solid fa-eye"></i></a>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-gold py-1 px-2" style="font-size: 0.8rem;"><i class="fa-solid fa-pen"></i></a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-crimson py-1 px-2" style="font-size: 0.8rem;"><i class="fa-solid fa-trash"></i></a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary py-1 px-2" style="font-size: 0.8rem;"><i class="fa-solid fa-eye"></i></a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary py-1 px-2" style="font-size: 0.8rem;"><i class="fa-solid fa-pen"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger py-1 px-2" style="font-size: 0.8rem;"><i class="fa-solid fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -85,7 +85,7 @@
             else
             {
                 <tr>
-                    <td colspan="7" class="text-center py-4 text-muted" style="font-family:var(--font-mono);">NO RECORDS FOUND WITHIN SECTOR INDEX.</td>
+                    <td colspan="7" class="text-center py-4 text-muted" style="font-family:var(--font-mono);">No records found.</td>
                 </tr>
             }
         </tbody>
@@ -97,7 +97,7 @@
 {
     <div class="d-flex justify-content-between align-items-center mt-4" style="font-family:var(--font-mono);">
         <span class="text-muted">
-            INDEX SECTOR PAGE <strong>@Model.PageNumber</strong> OF <strong>@Model.TotalPages</strong>
+                Page <strong>@Model.PageNumber</strong> of <strong>@Model.TotalPages</strong>
         </span>
         <ul class="pagination mb-0 gap-1">
             <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">

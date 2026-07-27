@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryManagementSystem.Controllers
 {
@@ -14,6 +15,7 @@ namespace LibraryManagementSystem.Controllers
             _userManager = userManager;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Login(string? returnUrl = null)
         {
@@ -21,6 +23,7 @@ namespace LibraryManagementSystem.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string email, string password, string? returnUrl = null)

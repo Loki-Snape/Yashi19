@@ -10,10 +10,10 @@
 
 <div class="row align-items-center mb-4">
     <div class="col-md-6">
-        <h2 class="tech-header mb-0">CLASSIFIED @typeName.ToUpper()</h2>
+            <h2 class="tech-header mb-0">@typeName</h2>
     </div>
     <div class="col-md-6 text-end">
-        <a asp-action="Create" class="btn-cyan">
+        <a asp-action="Create" class="btn btn-primary">
             <i class="fa-solid fa-plus me-1"></i> Register Publication
         </a>
     </div>
@@ -26,10 +26,10 @@
             <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control" placeholder="Search Title or Publisher..." />
         </div>
         <div class="col-md-3 d-flex gap-2">
-            <button type="submit" class="btn-cyan w-100">Search</button>
+            <button type="submit" class="btn btn-primary w-100">Search</button>
             @if (!string.IsNullOrWhiteSpace(ViewBag.SearchString))
             {
-                <a asp-action="Index" class="btn-outline-mib d-flex align-items-center justify-content-center" style="padding: 10px 16px;"><i class="fa-solid fa-rotate-left"></i></a>
+                <a asp-action="Index" class="btn btn-outline-primary d-flex align-items-center justify-content-center" style="padding: 10px 16px;"><i class="fa-solid fa-rotate-left"></i></a>
             }
         </div>
     </form>
@@ -55,7 +55,7 @@
                 foreach (var item in Model)
                 {
                     <tr>
-                        <td class="fw-bold text-white">@item.Title</td>
+                        <td class="fw-bold text-dark">@item.Title</td>
                         <td>
                             @if (item.Type == PublicationType.Newspaper)
                             {
@@ -72,9 +72,9 @@
                         <td>@item.Frequency</td>
                         <td class="text-end">
                             <div class="btn-group gap-1">
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-mib py-1 px-2" style="font-size:0.8rem;"><i class="fa-solid fa-eye"></i></a>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-gold py-1 px-2" style="font-size:0.8rem;"><i class="fa-solid fa-pen"></i></a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-crimson py-1 px-2" style="font-size:0.8rem;"><i class="fa-solid fa-trash"></i></a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary py-1 px-2" style="font-size:0.8rem;"><i class="fa-solid fa-eye"></i></a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary py-1 px-2" style="font-size:0.8rem;"><i class="fa-solid fa-pen"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger py-1 px-2" style="font-size:0.8rem;"><i class="fa-solid fa-trash"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -94,9 +94,9 @@
 @if (totalPages > 1)
 {
     <div class="d-flex justify-content-between align-items-center mt-3">
-        <span>INDEX SECTOR PAGE @currentPage OF @totalPages</span>
+        <span>Page @currentPage of @totalPages</span>
         <div class="btn-group">
-            <a class="btn btn-sm btn-outline-secondary @(currentPage <= 1 ? "disabled" : "")"
+            <a class="btn btn-sm btn-outline-primary @(currentPage <= 1 ? "disabled" : "")"
                href="@Url.Action("Index", "Publications", new { pageNumber = currentPage - 1, searchString = searchString })">PREV</a>
 
             @for (int i = 1; i <= totalPages; i++)

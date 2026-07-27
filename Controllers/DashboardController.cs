@@ -42,21 +42,22 @@ namespace LibraryManagementSystem.Controllers
                     viewModel.OverdueBorrowings = await _context.BorrowRecords.CountAsync(b => !b.IsReturned && b.DueDate < DateTime.Now);
                     viewModel.TotalTransactions = await _context.BorrowRecords.CountAsync();
                     viewModel.TotalBorrowings = viewModel.TotalTransactions;
-                    viewModel.RecentTransactions = await _context.BorrowRecords
-                        .Include(b => b.Book)
-                        .Include(b => b.Student)
-                        .OrderByDescending(b => b.BorrowDate)
-                        .Take(5)
-                        .Select(b => new RecentTransactionViewModel
-                        {
-                            BookTitle = b.Book != null ? b.Book.Title : "Unknown Asset",
-                            StudentName = b.Student != null ? $"{b.Student.FirstName} {b.Student.LastName}" : "Unknown Agent",
-                            StudentCardId = b.Student != null ? b.Student.StudentCardId : "N/A",
-                            BorrowDate = b.BorrowDate,
-                            DueDate = b.DueDate,
-                            IsReturned = b.IsReturned
-                        })
-                        .ToListAsync();
+                                            viewModel.RecentTransactions = await _context.BorrowRecords
+                            .Include(b => b.Book)
+                            .Include(b => b.Student)
+                            .OrderByDescending(b => b.BorrowDate)
+                            .Take(5)
+                            .Select(b => new RecentTransactionViewModel
+                            {
+                                Id = b.Id,
+                                BookTitle = b.Book != null ? b.Book.Title : "Unknown Asset",
+                                StudentName = b.Student != null ? $"{b.Student.FirstName} {b.Student.LastName}" : "Unknown Agent",
+                                StudentCardId = b.Student != null ? b.Student.StudentCardId : "N/A",
+                                BorrowDate = b.BorrowDate,
+                                DueDate = b.DueDate,
+                                IsReturned = b.IsReturned
+                            })
+                            .ToListAsync();
 
                     viewModel.RecentBorrowings = viewModel.RecentTransactions;
                 }

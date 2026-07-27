@@ -46,7 +46,7 @@
     </table>
 
     <div class="d-flex justify-content-between align-items-center mt-3">
-        <span>INDEX SECTOR PAGE @ViewBag.CurrentPage OF @ViewBag.TotalPages</span>
+        <span>Page @ViewBag.CurrentPage of @ViewBag.TotalPages</span>
         <div>
             <a class="btn btn-sm btn-outline-secondary @(ViewBag.CurrentPage <= 1 ? "disabled" : "")" 
                href="@Url.Action("Index", new { pageNumber = ViewBag.CurrentPage - 1, searchString = ViewBag.SearchString })">PREV</a>

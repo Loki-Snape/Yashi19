@@ -164,6 +164,7 @@
                             <th>Borrow Date</th>
                             <th>Due Date</th>
                             <th class="pe-4 text-end">Status</th>
+                            <th class="pe-4 text-end">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -181,13 +182,18 @@
                                             @(item.IsReturned ? "Returned" : (item.DueDate < DateTime.Now ? "Overdue" : "Active"))
                                         </span>
                                     </td>
+                                    <td class="pe-4 text-end">
+                                        <form asp-controller="Books" asp-action="Return" asp-route-id="@item.Id" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-sm btn-success">Return</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             }
                         }
                         else
                         {
                             <tr>
-                                <td colspan="5" class="text-center py-4 text-muted">
+                                <td colspan="6" class="text-center py-4 text-muted">
                                     <i class="bi bi-inbox fs-3 d-block mb-1"></i>
                                     No recent borrow records found in current sector logs.
                                 </td>

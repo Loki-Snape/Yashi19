@@ -26,6 +26,7 @@ namespace LibraryManagementSystem.ViewModels
         public string BookTitle { get; set; } = string.Empty;
         public string StudentName { get; set; } = string.Empty;
         public string StudentCardId { get; set; } = string.Empty;
+        public int Id { get; set; }
         public DateTime BorrowDate { get; set; }
         public DateTime DueDate { get; set; }
         public bool IsReturned { get; set; }
